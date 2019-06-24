@@ -82,6 +82,9 @@ class preloadGame extends Phaser.Scene {
     }
     preload() {
         this.load.path = "images/";
+
+        this.load.image("plombo", "plombo_light_off.png");
+        this.load.image("plombo_unlocked", "plombo_light_on.png");
         this.load.image("platform", "platform.png");
 
         this.load.spritesheet("player", "plombo.png", {
@@ -171,9 +174,13 @@ class homeScreen extends Phaser.Scene {
         bestScoreText.x = game.config.width / 2 - bestScoreText.width / 2;
         bestScoreText.y = titleText.y + titleText.height + 16;
 
+        let plomboFace = this.add.image(0, 0, (gameOptions.bonus)? 'plombo_unlocked' : 'plombo');
+        plomboFace.x = game.config.width / 2;
+        plomboFace.y = plomboFace.height / 2 + bestScoreText.y + bestScoreText.height + 64;
+
         let startGameText = this.add.text(0, 0, 'Start', { fontSize: '60px', fill: '#000' });
         startGameText.x = game.config.width / 2 - startGameText.width / 2;
-        startGameText.y = bestScoreText.y + bestScoreText.height + 64;
+        startGameText.y = plomboFace.y + plomboFace.height + 16;
         startGameText.setInteractive(new Phaser.Geom.Rectangle(0, 0, startGameText.width, startGameText.height), Phaser.Geom.Rectangle.Contains);
 
         let creditsText = this.add.text(0, 0, 'Credits', { fontSize: '60px', fill: '#000' });
@@ -192,22 +199,16 @@ class playGame extends Phaser.Scene {
         super("PlayGame");
     }
     create() {
+        // the main background image
+        let background = this.physics.add.sprite(game.config.width / 2, game.config.height / 2, "background", 2);
+        background.displayWidth = game.config.width;
+        background.displayHeight = game.config.height;
+
         // the score and best score
         scoreText = this.add.text(16, 16, `Score: ${score}`, { fontSize: '32px', fill: '#000' });
         bestScoreText = this.add.text(16, 16, `Best: ${bestScore}`, { fontSize: '32px', fill: '#000' });
         bestScoreText.x = game.config.width - bestScoreText.width - 16;
 
-        // the main background image
-        let background = this.physics.add.sprite(game.config.width / 2, game.config.height / 2, "background", 2);
-        background.displayWidth = game.config.width;
-        background.displayHeight = game.config.height;
-/*
-        let city = this.physics.add.sprite(0, game.config.height / 2, "background", 1);
-        city.x = city.width / 2;
-
-        let wall = this.physics.add.sprite(0, game.config.height / 2, "background", 3);
-
-*/
         // group with all active cities.
         this.cityGroup = this.add.group();
 
