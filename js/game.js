@@ -10,7 +10,7 @@ localStorage.setItem('bestScore', bestScore);
 
 let gameOptions = {
     // Bonus is unlocked ?
-    bonus: false,
+    bonus: (localStorage.getItem('bonus'))? localStorage.getItem('bonus') : false,
 
     // background speed, in pixels per second
     backgroundSpeed: 80,
@@ -174,9 +174,15 @@ class homeScreen extends Phaser.Scene {
         bestScoreText.x = game.config.width / 2 - bestScoreText.width / 2;
         bestScoreText.y = titleText.y + titleText.height + 16;
 
-        let plomboFace = this.add.image(0, 0, (gameOptions.bonus)? 'plombo_unlocked' : 'plombo');
+        let plomboFace = this.add.image(0, 0, (gameOptions.bonus)? 'plombo_unlocked' : 'plombo').setInteractive();
         plomboFace.x = game.config.width / 2;
         plomboFace.y = plomboFace.height / 2 + bestScoreText.y + bestScoreText.height + 64;
+
+        let bonusText = this.add.text(0, 0, (gameOptions.bonus)? 'Voir les bonus' : 'Bonus verrouillés', { fontSize: '60px', fill: '#fff' });
+        bonusText.x = game.config.width / 2 - bonusText.width / 2;
+        bonusText.y = plomboFace.y;
+        bonusText.setInteractive(new Phaser.Geom.Rectangle(0, 0, bonusText.width, bonusText.height), Phaser.Geom.Rectangle.Contains);
+        bonusText.alpha = 0;
 
         let startGameText = this.add.text(0, 0, 'Start', { fontSize: '60px', fill: '#000' });
         startGameText.x = game.config.width / 2 - startGameText.width / 2;
@@ -188,6 +194,20 @@ class homeScreen extends Phaser.Scene {
         creditsText.y = startGameText.y + startGameText.height + 32;
 
         startGameText.on('pointerdown', () => this.scene.start('PlayGame'));
+
+        this.input.on('pointerover', function (event, gameObjects) {
+            if (gameObjects[0].texture.key === 'plombo' || gameObjects[0].texture.key === 'plombo_unlocked' ||
+                gameObjects[0]._text === 'Voir les bonus' || gameObjects[0]._text === 'Bonus verrouillés') {
+                bonusText.alpha = 1;
+            }
+        });
+
+        this.input.on('pointerout', function (event, gameObjects) {
+            if (gameObjects[0].texture.key === 'plombo' || gameObjects[0].texture.key === 'plombo_unlocked' ||
+                gameObjects[0]._text === 'Voir les bonus' || gameObjects[0]._text === 'Bonus verrouillés') {
+                bonusText.alpha = 0;
+            }
+        });
     }
     update() {
 
@@ -417,6 +437,7 @@ class playGame extends Phaser.Scene {
 
             if(bestScore > 10) {
                 gameOptions.bonus = true;
+                localStorage.setItem('bonus', gameOptions.bonus);
             }
 
             score = 0;
