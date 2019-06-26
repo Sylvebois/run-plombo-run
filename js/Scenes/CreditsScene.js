@@ -1,4 +1,5 @@
 import * as PHASER from '../phaser.min.js';
+import config from '../Config/config.js';
 
 export default class CreditsScene extends Phaser.Scene {
   constructor () {
@@ -6,12 +7,9 @@ export default class CreditsScene extends Phaser.Scene {
   }
 
   create () {
-    var width = this.cameras.main.width;
-    var height = this.cameras.main.height;
-
     this.creditsText = this.add.text(0, 0, 'Credits', { fontSize: '32px', fill: '#fff' });
     this.madeByText = this.add.text(0, 0, 'Created By: Sanidel', { fontSize: '26px', fill: '#fff' });
-    this.zone = this.add.zone(width/2, height/2, width, height);
+    this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
     Phaser.Display.Align.In.Center(
       this.creditsText,

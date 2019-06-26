@@ -2,7 +2,11 @@ import * as PHASER from './phaser.min.js';
 import config from './Config/config.js';
 import BootScene from './Scenes/BootScene.js';
 import PreloaderScene from './Scenes/PreloaderScene.js';
+import TitleScene from './Scenes/TitleScene.js';
+import OptionsScene from './Scenes/OptionsScene.js';
 import CreditsScene from './Scenes/CreditsScene.js';
+import GameScene from './Scenes/GameScene.js';
+import Model from './Model.js';
 
 /*
  * source : https://www.emanueleferonato.com/2019/01/23/html5-endless-runner-built-with-phaser-and-arcade-physics-step-5-adding-deadly-frog-being-kind-with-players-by-setting-its-body-smaller-than-the-image/
@@ -65,9 +69,14 @@ let gameOptions = {
 class Game extends Phaser.Game {
     constructor () {
       super(config);
+      const model = new Model();
+      this.globals = { model, bgMusic: null };
       this.scene.add('Boot', BootScene);
       this.scene.add('Preloader', PreloaderScene);
+      this.scene.add('Title', TitleScene);
+      this.scene.add('Options', OptionsScene);
       this.scene.add('Credits', CreditsScene);
+      this.scene.add('Game', GameScene);
       this.scene.start('Boot');
     }
   }
