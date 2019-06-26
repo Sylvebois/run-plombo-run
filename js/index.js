@@ -1,3 +1,6 @@
+import * as PHASER from './phaser.min.js';
+import CONFIG from './Config/config.js';
+
 /*
  * source : https://www.emanueleferonato.com/2019/01/23/html5-endless-runner-built-with-phaser-and-arcade-physics-step-5-adding-deadly-frog-being-kind-with-players-by-setting-its-body-smaller-than-the-image/
  */
@@ -81,33 +84,33 @@ class preloadGame extends Phaser.Scene {
         super("PreloadGame");
     }
     preload() {
-        this.load.path = "images/";
+        this.load.path = "assets/";
 
-        this.load.image("plombo", "plombo_light_off.png");
-        this.load.image("plombo_unlocked", "plombo_light_on.png");
-        this.load.image("platform", "platform.png");
+        this.load.image("plombo", "ui/plombo_light_off.png");
+        this.load.image("plombo_unlocked", "ui/plombo_light_on.png");
+        this.load.image("platform", "game/platform.png");
 
-        this.load.spritesheet("player", "plombo.png", {
+        this.load.spritesheet("player", "game/plombo.png", {
             frameWidth: 64,
             frameHeight: 69
         });
 
-        this.load.spritesheet("robinet", "robinet.png", {
+        this.load.spritesheet("robinet", "game/robinet.png", {
             frameWidth: 32,
             frameHeight: 32
         });
 
-        this.load.spritesheet("frog", "frog.png", {
+        this.load.spritesheet("frog", "game/frog.png", {
             frameWidth: 51,
             frameHeight: 59
         });
 
-        this.load.spritesheet("seahorse", "seahorse.png", {
+        this.load.spritesheet("seahorse", "game/seahorse.png", {
             frameWidth: 50,
             frameHeight: 85
         });
 
-        this.load.spritesheet("background", "background.png", {
+        this.load.spritesheet("background", "game/background.png", {
             frameWidth: 384,
             frameHeight: 224
         })
