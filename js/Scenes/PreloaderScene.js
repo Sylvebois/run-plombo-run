@@ -53,8 +53,7 @@ export default class PreloaderScene extends Phaser.Scene {
     assetText.setOrigin(0.5, 0.5);
 
     // add logo image
-    let logo =this.add.image(0, 0, 'logo');
-    console.log(loadingText);
+    let logo = this.add.image(0, 0, 'logo');
     logo.setPosition(width / 2, loadingText.y - logo.height);
 
     // update progress bar
