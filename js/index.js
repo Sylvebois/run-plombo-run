@@ -1,5 +1,7 @@
 import * as PHASER from './phaser.min.js';
-import CONFIG from './Config/config.js';
+import config from './Config/config.js';
+import BootScene from './Scenes/BootScene.js';
+import PreloaderScene from './Scenes/PreloaderScene.js';
 
 /*
  * source : https://www.emanueleferonato.com/2019/01/23/html5-endless-runner-built-with-phaser-and-arcade-physics-step-5-adding-deadly-frog-being-kind-with-players-by-setting-its-body-smaller-than-the-image/
@@ -59,6 +61,17 @@ let gameOptions = {
     seahorsePercent: 0
 }
 
+class Game extends Phaser.Game {
+    constructor () {
+      super(config);
+      this.scene.add('Boot', BootScene);
+      this.scene.add('Preloader', PreloaderScene);
+      this.scene.start('Boot');
+    }
+  }
+
+  window.game = new Game();
+/*
 window.onload = function () {
 
     let gameConfig = {
@@ -538,3 +551,4 @@ function resize() {
         canvas.style.height = windowHeight + "px";
     }
 }
+*/
