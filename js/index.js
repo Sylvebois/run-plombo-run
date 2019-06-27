@@ -12,16 +12,15 @@ import Model from './Model.js';
  * source : https://www.emanueleferonato.com/2019/01/23/html5-endless-runner-built-with-phaser-and-arcade-physics-step-5-adding-deadly-frog-being-kind-with-players-by-setting-its-body-smaller-than-the-image/
  */
 let score = 0;
-let bestScore = localStorage.getItem('bestScore') | 0;
 let scoreText, bestScoreText;
 let game;
 
+/*
+let bestScore = localStorage.getItem('bestScore') | 0;
 localStorage.setItem('bestScore', bestScore);
+*/
 
 let gameOptions = {
-    // Bonus is unlocked ?
-    bonus: (localStorage.getItem('bonus'))? localStorage.getItem('bonus') : false,
-
     // background speed, in pixels per second
     backgroundSpeed: 80,
 
@@ -67,21 +66,47 @@ let gameOptions = {
 }
 
 class Game extends Phaser.Game {
-    constructor () {
-      super(config);
-      const model = new Model();
-      this.globals = { model, bgMusic: null };
-      this.scene.add('Boot', BootScene);
-      this.scene.add('Preloader', PreloaderScene);
-      this.scene.add('Title', TitleScene);
-      this.scene.add('Options', OptionsScene);
-      this.scene.add('Credits', CreditsScene);
-      this.scene.add('Game', GameScene);
-      this.scene.start('Boot');
+    constructor() {
+        super(config);
+        const model = new Model();
+        this.globals = {
+            model,
+            bgMusic: null,
+            bonus: (localStorage.getItem('bonus')) ? localStorage.getItem('bonus') : false,
+            bestScore : localStorage.getItem('bestScore') | 0
+        };
+        this.scene.add('Boot', BootScene);
+        this.scene.add('Preloader', PreloaderScene);
+        this.scene.add('Title', TitleScene);
+        this.scene.add('Options', OptionsScene);
+        this.scene.add('Credits', CreditsScene);
+        this.scene.add('Game', GameScene);
+        this.scene.start('Boot');
     }
-  }
+}
 
-  window.game = new Game();
+window.game = new Game();
+window.focus();
+resize();
+window.addEventListener("resize", resize, false);
+
+
+function resize() {
+    let canvas = document.querySelector("canvas");
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
+    let windowRatio = windowWidth / windowHeight;
+    let gameRatio = config.width / config.height;
+    if (windowRatio < gameRatio) {
+        canvas.style.width = windowWidth + "px";
+        canvas.style.height = (windowWidth / gameRatio) + "px";
+    }
+    else {
+        canvas.style.width = (windowHeight * gameRatio) + "px";
+        canvas.style.height = windowHeight + "px";
+    }
+}
+
 /*
 window.onload = function () {
 
@@ -106,38 +131,6 @@ window.onload = function () {
 class preloadGame extends Phaser.Scene {
     constructor() {
         super("PreloadGame");
-    }
-    preload() {
-        this.load.path = "assets/";
-
-        this.load.image("plombo", "ui/plombo_light_off.png");
-        this.load.image("plombo_unlocked", "ui/plombo_light_on.png");
-        this.load.image("platform", "game/platform.png");
-
-        this.load.spritesheet("player", "game/plombo.png", {
-            frameWidth: 64,
-            frameHeight: 69
-        });
-
-        this.load.spritesheet("robinet", "game/robinet.png", {
-            frameWidth: 32,
-            frameHeight: 32
-        });
-
-        this.load.spritesheet("frog", "game/frog.png", {
-            frameWidth: 51,
-            frameHeight: 59
-        });
-
-        this.load.spritesheet("seahorse", "game/seahorse.png", {
-            frameWidth: 50,
-            frameHeight: 85
-        });
-
-        this.load.spritesheet("background", "game/background.png", {
-            frameWidth: 384,
-            frameHeight: 224
-        })
     }
     create() {
 
@@ -194,13 +187,6 @@ class homeScreen extends Phaser.Scene {
         super("HomeScreen");
     }
     create() {
-        let titleText = this.add.text(0, 32, 'Run Plombo ! Run !', { fontSize: '60px', fill: '#000' });
-        titleText.x = game.config.width / 2 - titleText.width / 2;
-
-        let bestScoreText = this.add.text(0, 0, `Best Score: ${bestScore}`, { fontSize: '32px', fill: '#000' });
-        bestScoreText.x = game.config.width / 2 - bestScoreText.width / 2;
-        bestScoreText.y = titleText.y + titleText.height + 16;
-
         let plomboFace = this.add.image(0, 0, (gameOptions.bonus)? 'plombo_unlocked' : 'plombo').setInteractive();
         plomboFace.x = game.config.width / 2;
         plomboFace.y = plomboFace.height / 2 + bestScoreText.y + bestScoreText.height + 64;
@@ -210,17 +196,6 @@ class homeScreen extends Phaser.Scene {
         bonusText.y = plomboFace.y;
         bonusText.setInteractive(new Phaser.Geom.Rectangle(0, 0, bonusText.width, bonusText.height), Phaser.Geom.Rectangle.Contains);
         bonusText.alpha = 0;
-
-        let startGameText = this.add.text(0, 0, 'Start', { fontSize: '60px', fill: '#000' });
-        startGameText.x = game.config.width / 2 - startGameText.width / 2;
-        startGameText.y = plomboFace.y + plomboFace.height + 16;
-        startGameText.setInteractive(new Phaser.Geom.Rectangle(0, 0, startGameText.width, startGameText.height), Phaser.Geom.Rectangle.Contains);
-
-        let creditsText = this.add.text(0, 0, 'Credits', { fontSize: '60px', fill: '#000' });
-        creditsText.x = game.config.width / 2 - creditsText.width / 2;
-        creditsText.y = startGameText.y + startGameText.height + 32;
-
-        startGameText.on('pointerdown', () => this.scene.start('PlayGame'));
 
         this.input.on('pointerover', function (event, gameObjects) {
             if (gameObjects[0].texture.key === 'plombo' || gameObjects[0].texture.key === 'plombo_unlocked' ||
@@ -236,10 +211,8 @@ class homeScreen extends Phaser.Scene {
             }
         });
     }
-    update() {
-
-    }
 }
+
 // playGame scene
 class playGame extends Phaser.Scene {
     constructor() {
@@ -547,19 +520,5 @@ class playGame extends Phaser.Scene {
     }
 };
 
-function resize() {
-    let canvas = document.querySelector("canvas");
-    let windowWidth = window.innerWidth;
-    let windowHeight = window.innerHeight;
-    let windowRatio = windowWidth / windowHeight;
-    let gameRatio = game.config.width / game.config.height;
-    if (windowRatio < gameRatio) {
-        canvas.style.width = windowWidth + "px";
-        canvas.style.height = (windowWidth / gameRatio) + "px";
-    }
-    else {
-        canvas.style.width = (windowHeight * gameRatio) + "px";
-        canvas.style.height = windowHeight + "px";
-    }
-}
+
 */
