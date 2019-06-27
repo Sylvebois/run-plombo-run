@@ -11,59 +11,6 @@ import Model from './Model.js';
 /*
  * source : https://www.emanueleferonato.com/2019/01/23/html5-endless-runner-built-with-phaser-and-arcade-physics-step-5-adding-deadly-frog-being-kind-with-players-by-setting-its-body-smaller-than-the-image/
  */
-let score = 0;
-let scoreText, bestScoreText;
-let game;
-
-/*
-let bestScore = localStorage.getItem('bestScore') | 0;
-localStorage.setItem('bestScore', bestScore);
-*/
-
-let gameOptions = {
-    // background speed, in pixels per second
-    backgroundSpeed: 80,
-
-    // platform speed range, in pixels per second
-    platformSpeedRange: [300, 300],
-
-    // spawn range, how far should be the rightmost platform from the right edge
-    // before next platform spawns, in pixels
-    spawnRange: [80, 300],
-
-    // platform width range, in pixels
-    platformSizeRange: [90, 300],
-
-    // a height range between rightmost platform and next platform to be spawned
-    platformHeightRange: [-5, 5],
-
-    // a scale to be multiplied by platformHeightRange
-    platformHeighScale: 20,
-
-    // platform max and min height, as screen height ratio
-    platformVerticalLimit: [0.4, 0.8],
-
-    // player starting X position
-    playerStartPosition: 200,
-
-    // player gravity
-    playerGravity: 900,
-
-    // player jump force
-    jumpForce: 400,
-
-    // consecutive jumps allowed
-    jumps: 2,
-
-    // % of probability a robinet appears on the platform
-    robPercent: 50,
-
-    // % of probability a frog appears on the platform
-    frogPercent: 0,
-
-    // % of probability a seahorse appears on the platform
-    seahorsePercent: 0
-}
 
 class Game extends Phaser.Game {
     constructor() {
@@ -108,24 +55,12 @@ function resize() {
 }
 
 /*
-window.onload = function () {
 
-    let gameConfig = {
-        type: Phaser.AUTO,
-        width: 1334,
-        height: 750,
-        scene: [preloadGame, homeScreen, playGame],
-        backgroundColor: 0x0c88c7,
-        physics: {
-            default: "arcade"
-        }
-    }
-
-    game = new Phaser.Game(gameConfig);
-    window.focus();
-    resize();
-    window.addEventListener("resize", resize, false);
-}
+let score = 0;
+let scoreText, bestScoreText;
+let game;
+let bestScore = localStorage.getItem('bestScore') | 0;
+localStorage.setItem('bestScore', bestScore);
 
 // preloadGame scene
 class preloadGame extends Phaser.Scene {
@@ -133,50 +68,6 @@ class preloadGame extends Phaser.Scene {
         super("PreloadGame");
     }
     create() {
-
-        // setting player animation
-        this.anims.create({
-            key: "run",
-            frames: this.anims.generateFrameNumbers("player", {
-                start: 0,
-                end: 2
-            }),
-            frameRate: 8,
-            repeat: -1
-        });
-
-        //setting frog animation
-        this.anims.create({
-            key: "jumpingFrog",
-            frames: this.anims.generateFrameNumbers("frog", {
-                start: 0,
-                end: 3
-            }),
-            frameRate: 5,
-            yoyo: true,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: "idleFrog",
-            frames: this.anims.generateFrameNumbers("frog", {
-                start: 4,
-                end: 6
-            }),
-            frameRate: 5,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: "jumpingSeahorse",
-            frames: this.anims.generateFrameNumbers("seahorse", {
-                start: 0,
-                end: 3
-            }),
-            frameRate: 5,
-            repeat: -1
-        });
-
         this.scene.start("HomeScreen");
     }
 }

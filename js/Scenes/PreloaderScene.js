@@ -117,6 +117,51 @@ export default class PreloaderScene extends Phaser.Scene {
     });
   }
 
+  create() {
+    // setting player animation
+    this.anims.create({
+    key: 'run',
+    frames: this.anims.generateFrameNumbers('player', {
+        start: 0,
+        end: 2
+    }),
+    frameRate: 8,
+    repeat: -1
+    });
+
+    //setting frog animation
+    this.anims.create({
+        key: 'jumpingFrog',
+        frames: this.anims.generateFrameNumbers('frog', {
+            start: 0,
+            end: 3
+        }),
+        frameRate: 5,
+        yoyo: true,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'idleFrog',
+        frames: this.anims.generateFrameNumbers('frog', {
+            start: 4,
+            end: 6
+        }),
+        frameRate: 5,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'jumpingSeahorse',
+        frames: this.anims.generateFrameNumbers('seahorse', {
+            start: 0,
+            end: 3
+        }),
+        frameRate: 5,
+        repeat: -1
+    });
+  }
+
   ready () {
     this.scene.start('Title');
     this.readyCount++;
