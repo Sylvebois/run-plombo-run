@@ -84,9 +84,37 @@ export default class PreloaderScene extends Phaser.Scene {
     // load assets needed in our game
     this.load.image('blueButton1', 'assets/ui/blue_button02.png');
     this.load.image('blueButton2', 'assets/ui/blue_button03.png');
-    this.load.image('phaserLogo', 'assets/logo.png');
     this.load.image('box', 'assets/ui/grey_box.png');
     this.load.image('checkedBox', 'assets/ui/blue_boxCheckmark.png');
+
+    this.load.image('plombo', 'assets/ui/plombo_light_off.png');
+    this.load.image('plombo_unlocked', 'assets/ui/plombo_light_on.png');
+    this.load.image('platform', 'assets/game/platform.png');
+
+    this.load.spritesheet('player', 'assets/game/plombo.png', {
+        frameWidth: 64,
+        frameHeight: 69
+    });
+
+    this.load.spritesheet('robinet', 'assets/game/robinet.png', {
+        frameWidth: 32,
+        frameHeight: 32
+    });
+
+    this.load.spritesheet('frog', 'assets/game/frog.png', {
+        frameWidth: 51,
+        frameHeight: 59
+    });
+
+    this.load.spritesheet('seahorse', 'assets/game/seahorse.png', {
+        frameWidth: 50,
+        frameHeight: 85
+    });
+
+    this.load.spritesheet('background', 'assets/game/background.png', {
+        frameWidth: 384,
+        frameHeight: 224
+    });
   }
 
   ready () {
