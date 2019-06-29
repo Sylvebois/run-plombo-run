@@ -7,8 +7,16 @@ export default class CreditsScene extends Phaser.Scene {
   }
 
   create () {
+    let credits =
+`Created By: Sanidel
+
+Author: Thomas Ghaye
+Original Plombo design: Mireille Vicat
+
+Graphics and Sounds: Open Game Art`;
+
     this.creditsText = this.add.text(0, 0, 'Credits', { fontSize: '32px', fill: '#fff' });
-    this.madeByText = this.add.text(0, 0, 'Created By: Sanidel', { fontSize: '26px', fill: '#fff' });
+    this.madeByText = this.add.text(0, 0, credits, { fontSize: '26px', fill: '#fff' });
     this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
     Phaser.Display.Align.In.Center(
@@ -36,7 +44,7 @@ export default class CreditsScene extends Phaser.Scene {
 
     this.madeByTween = this.tweens.add({
       targets: this.madeByText,
-      y: -300,
+      y: -200,
       ease: 'Power1',
       duration: 8000,
       delay: 1000,
