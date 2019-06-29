@@ -115,6 +115,8 @@ export default class PreloaderScene extends Phaser.Scene {
         frameWidth: 384,
         frameHeight: 224
     });
+
+    this.load.audio('bgMusic', ['assets/game/Mercury.mp3']);
   }
 
   create() {

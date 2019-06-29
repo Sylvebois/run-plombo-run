@@ -7,6 +7,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init() {
+    this.model = this.sys.game.globals.model;
+    this.bgMusic = this.sound.add('bgMusic', { volume: 0.5, loop: true });
     this.score = 0;
     this.scoreText = '';
     this.bestScoreText = '';
@@ -33,6 +35,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    if (this.model.musicOn === true) {
+      this.bgMusic.play();
+    }
+
     // the main background image
     let background = this.physics.add.sprite(config.width / 2, config.height / 2, 'background', 2);
     background.displayWidth = config.width;
@@ -252,6 +258,7 @@ export default class GameScene extends Phaser.Scene {
         localStorage.setItem('bonus', this.sys.game.globals.bonus);
       }
 
+      this.bgMusic.destroy();
       this.scene.start('Title');
     }
 
