@@ -23,7 +23,7 @@ export default class GameScene extends Phaser.Scene {
       platformHeighScale: 20, // a scale to be multiplied by platformHeightRange
       platformVerticalLimit: [0.4, 0.8], // platform max and min height, as screen height ratio
 
-      playerStartPosition: 200, // player starting X position
+      playerStartPosition: 100, // player starting X position
       playerGravity: 900, // player gravity
       jumpForce: 400, // player jump force
       jumps: 2, // consecutive jumps allowed
@@ -92,6 +92,13 @@ export default class GameScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(this.gameOptions.playerStartPosition, game.config.height * 0.7, 'player');
     this.player.setGravityY(this.gameOptions.playerGravity);
     this.player.setDepth(2);
+
+    // the building where the player start
+    let sanidel = this.physics.add.sprite(0, 230, 'sanidel_building');
+    sanidel.setOrigin(0, 0);
+    sanidel.scale = 2;
+    sanidel.setDepth(2);
+    sanidel.setVelocityX(this.gameOptions.platformSpeedRange[0] * -1);
 
     // the player is not dying
     this.dying = false;

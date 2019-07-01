@@ -56,17 +56,6 @@ function resize() {
 }
 
 /*
-
-// preloadGame scene
-class preloadGame extends Phaser.Scene {
-    constructor() {
-        super("PreloadGame");
-    }
-    create() {
-        this.scene.start("HomeScreen");
-    }
-}
-
 // Home scene
 class homeScreen extends Phaser.Scene {
     constructor() {
@@ -98,5 +87,4 @@ class homeScreen extends Phaser.Scene {
         });
     }
 }
-
 */

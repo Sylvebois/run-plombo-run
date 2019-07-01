@@ -90,6 +90,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('plombo', 'assets/ui/plombo_light_off.png');
     this.load.image('plombo_unlocked', 'assets/ui/plombo_light_on.png');
     this.load.image('platform', 'assets/game/platform.png');
+    this.load.image('sanidel_building', 'assets/game/sanidel_building.png');
 
     this.load.spritesheet('player', 'assets/game/plombo.png', {
         frameWidth: 64,
