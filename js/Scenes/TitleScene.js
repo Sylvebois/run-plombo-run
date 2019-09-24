@@ -30,18 +30,4 @@ export default class TitleScene extends Phaser.Scene {
     plomboFace.setPosition(this.gameButton.x, this.gameButton.y - plomboFace.height / 2);
     plomboFace.scale = 0.5;
   }
-
-  centerButton (gameObject, offset = 0) {
-    Phaser.Display.Align.In.Center(
-      gameObject,
-      this.add.zone(config.width/2, config.height/2 - offset * 100, config.width, config.height)
-    );
-  }
-
-  centerButtonText (gameText, gameButton) {
-    Phaser.Display.Align.In.Center(
-      gameText,
-      gameButton
-    );
-  }
 };

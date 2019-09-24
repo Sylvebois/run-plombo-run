@@ -94,7 +94,7 @@ export default class GameScene extends Phaser.Scene {
     this.player.setDepth(2);
 
     // the building where the player start
-    let sanidel = this.physics.add.sprite(0, 230, 'sanidel_building');
+    let sanidel = this.physics.add.sprite(0, 270, 'sanidel_building');
     sanidel.setOrigin(0, 0);
     sanidel.scale = 2;
     sanidel.setDepth(2);
